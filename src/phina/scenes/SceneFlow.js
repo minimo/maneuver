@@ -1,7 +1,6 @@
-// @ts-nocheck
 import { LoadingScene, ManagerScene } from "phina.js/build/phina.esm";
-import { AssetCatalog } from "../assets/AssetCatalog";
-import { GameTitleScene } from "./GameTitleScene";
+import { AssetCatalog } from "@/phina/app/AssetCatalog";
+import { GameTitleScene } from "@/phina/scenes/GameTitleScene";
 import { MainScene } from "./MainScene";
 
 export class SceneFlow extends ManagerScene {

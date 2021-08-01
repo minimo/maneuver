@@ -1,5 +1,5 @@
 import { DisplayElement, DisplayScene } from "phina.js/build/phina.esm";
-import { $safe } from "../extensions/Utils";
+import { $safe } from "@/phina/extensions/Utils";
 
 export class MainScene extends DisplayScene {
 

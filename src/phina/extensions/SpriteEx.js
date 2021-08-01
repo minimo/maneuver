@@ -1,4 +1,5 @@
-import { Sprite } from "phina.js/build/phina.esm";
+import { Sprite } from "phina.js";
+
 export class SpriteEx extends Sprite {
   constructor(options) {
     super(options);

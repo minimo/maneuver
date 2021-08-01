@@ -1,6 +1,6 @@
-import { CircleShape, RectangleShape } from "phina.js/build/phina.esm";
-import { $safe } from "../extensions/Utils";
-import { GameObject } from "./GameObject";
+import { CircleShape, RectangleShape } from "phina.js";
+import { $safe } from "@/phina/extensions/Utils";
+import { GameObject } from "@/phina/elements/GameObject";
 
 export class Enemy extends GameObject {
   constructor(options) {

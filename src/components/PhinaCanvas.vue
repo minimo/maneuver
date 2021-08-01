@@ -6,8 +6,8 @@
 
 <script>
 import { phina } from "phina.js/build/phina.esm";
-import { SceneFlow } from "../phina/scenes/SceneFlow"
-import { MainApp } from "../phina/app/MainApp"
+import { SceneFlow } from "@/phina/scenes/SceneFlow"
+import { MainApp } from "@/phina/app/MainApp"
 
 export default {
   data() {
