@@ -12,4 +12,11 @@ export class Enemy extends GameObject {
     this.collision = new RectangleShape({ width: 16, height: 16 }).addChildTo(this);
     this.collision.alpha = 0.0;
   }
+
+  /**
+   * @virtual
+   * 更新用仮想関数
+   */
+  // eslint-disable-next-line no-unused-vars
+  update(_app) {}
 }

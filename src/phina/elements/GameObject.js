@@ -8,4 +8,11 @@ export class GameObject extends DisplayElement {
     this.time = 0;
     this.on('enterframe', () => this.time++);
   }
+
+  /**
+   * @virtual
+   * 更新用仮想関数
+   */
+  // eslint-disable-next-line no-unused-vars
+  update(_app) {}
 }

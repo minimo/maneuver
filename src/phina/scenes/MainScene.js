@@ -1,4 +1,4 @@
-import { DisplayElement, DisplayScene } from "phina.js/build/phina.esm";
+import { DisplayElement, DisplayScene } from "phina.js";
 import { $safe } from "@/phina/extensions/Utils";
 
 export class MainScene extends DisplayScene {
@@ -14,8 +14,7 @@ export class MainScene extends DisplayScene {
     this.foregroundLayer = new DisplayElement().addChildTo(this);
   }
 
-  update() {
-
-  }
+  // eslint-disable-next-line no-unused-vars
+  update(_app) {}
 
 }

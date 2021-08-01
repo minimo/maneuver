@@ -1,4 +1,4 @@
-import { LoadingScene, ManagerScene } from "phina.js/build/phina.esm";
+import { LoadingScene, ManagerScene } from "phina.js";
 import { AssetCatalog } from "@/phina/app/AssetCatalog";
 import { GameTitleScene } from "@/phina/scenes/GameTitleScene";
 import { MainScene } from "./MainScene";

@@ -1,4 +1,4 @@
-import { DisplayScene, Label } from "phina.js/build/phina.esm";
+import { DisplayScene, Label } from "phina.js";
 import { $safe } from "@/phina/extensions/Utils";
 
 export class GameTitleScene extends DisplayScene {
@@ -44,8 +44,8 @@ export class GameTitleScene extends DisplayScene {
     }
   }
 
-  update(app) {
-    if (app.pointer.getPointingStart()) {
+  update(_app) {
+    if (_app.pointer.getPointingStart()) {
       this.exit();
     }
   }
