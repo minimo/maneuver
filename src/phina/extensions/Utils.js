@@ -4,7 +4,7 @@
  */
 export function $extend() {
   Array.prototype.forEach.call(arguments, function(source) {
-    for (var property in source) {
+    for (let property in source) {
       this[property] = source[property];
     }
   }, this);

@@ -1,4 +1,4 @@
-import { CanvasApp } from "phina.js/build/phina.esm"
+import {CanvasApp} from "phina.js"
 
 export class MainApp extends CanvasApp {
 

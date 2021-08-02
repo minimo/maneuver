@@ -1,6 +1,6 @@
-import { Sprite } from "phina.js";
-import { $safe } from "@/phina/extensions/Utils";
-import { GameObject } from "@/phina/elements/GameObject";
+import {Sprite} from "phina.js";
+import {$safe} from "@/phina/extensions/Utils";
+import {GameObject} from "@/phina/elements/GameObject";
 
 export class Player extends GameObject {
   constructor(options) {

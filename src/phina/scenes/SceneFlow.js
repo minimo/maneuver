@@ -1,7 +1,7 @@
-import { LoadingScene, ManagerScene } from "phina.js";
-import { AssetCatalog } from "@/phina/app/AssetCatalog";
-import { GameTitleScene } from "@/phina/scenes/GameTitleScene";
-import { MainScene } from "./MainScene";
+import {LoadingScene, ManagerScene} from "phina.js";
+import {AssetCatalog} from "@/phina/app/AssetCatalog";
+import {GameTitleScene} from "@/phina/scenes/GameTitleScene";
+import {MainScene} from "./MainScene";
 
 export class SceneFlow extends ManagerScene {
   constructor() {

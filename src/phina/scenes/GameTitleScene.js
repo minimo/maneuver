@@ -1,5 +1,5 @@
-import { DisplayScene, Label } from "phina.js";
-import { $safe } from "@/phina/extensions/Utils";
+import {DisplayScene, Label} from "phina.js";
+import {$safe} from "@/phina/extensions/Utils";
 
 export class GameTitleScene extends DisplayScene {
 
