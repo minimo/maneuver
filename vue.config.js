@@ -18,4 +18,7 @@ module.exports = {
             filename: '[name].css',
         },
     },
+    devServer: {
+        port: 8090,
+    }
 }
