@@ -1,10 +1,10 @@
 import {DisplayScene, Label} from "phina.js";
 import {$safe} from "@/phina/extensions/Utils";
 
-export class GameTitleScene extends DisplayScene {
+export class TitleScene extends DisplayScene {
 
   constructor(params) {
-    params = $safe.call({}, params, GameTitleScene.defaults);
+    params = $safe.call({}, params, TitleScene.defaults);
     super(params);
 
     this.backgroundColor = params.backgroundColor;
@@ -52,7 +52,7 @@ export class GameTitleScene extends DisplayScene {
 
 }
 
-GameTitleScene.defaults = {
+TitleScene.defaults = {
   title: 'phina.js games',
   message: '',
 

@@ -1,6 +1,6 @@
 import {LoadingScene, ManagerScene} from "phina.js";
 import {AssetCatalog} from "@/phina/app/AssetCatalog";
-import {GameTitleScene} from "@/phina/scenes/GameTitleScene";
+import {TitleScene} from "@/phina/scenes/TitleScene";
 import {MainScene} from "./MainScene";
 
 export class SceneFlow extends ManagerScene {
@@ -16,7 +16,7 @@ export class SceneFlow extends ManagerScene {
         },
       },{
         label: "title",
-        className: GameTitleScene,
+        className: TitleScene,
         nextLabel: "main",
         arguments: {
           title: "MANEUVER"
