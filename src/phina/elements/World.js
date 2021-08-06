@@ -59,7 +59,7 @@ export class World extends DisplayElement {
       player.sprite.setFrameIndex(player.direction);
     }
     if (ct.getKey(Keyboard.KEY_CODE["up"])) {
-      player.speed += 0.001;
+      player.speed += 0.002;
       if (player.speed > 1) player.speed = 1;
       const rad = MathEx.degToRad(player.direction * 22.5)
       player.velocity.x += Math.sin(rad) * player.speed;

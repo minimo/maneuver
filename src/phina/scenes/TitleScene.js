@@ -1,4 +1,4 @@
-import {DisplayScene, Label} from "phina.js";
+import {DisplayScene, Keyboard, Label} from "phina.js";
 import {$safe} from "@/phina/extensions/Utils";
 
 export class TitleScene extends DisplayScene {
@@ -45,7 +45,7 @@ export class TitleScene extends DisplayScene {
   }
 
   update(_app) {
-    if (_app.pointer.getPointingStart()) {
+    if (_app.pointer.getPointingStart() || _app.keyboard.getKey(Keyboard.KEY_CODE["z"])) {
       this.exit();
     }
   }
