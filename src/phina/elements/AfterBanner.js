@@ -5,6 +5,9 @@ export class AfterBanner extends Accessory {
   constructor(target) {
     super(target);
     this.offset = new Vector2(0, 0);
+    this.velocity = new Vector2(0, 0);
+    this.isDisable = true;
+    this.before = null;
   }
 
   setLayer(layer) {

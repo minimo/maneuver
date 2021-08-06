@@ -30,14 +30,14 @@ export class Player extends GameObject {
     const x = -Math.sin(rad) * 8;
     const y = Math.cos(rad) * 8;
     for(let i = 0; i < 2; i++) {
-      const px = offset[this.direction][i].x;
-      const py = offset[this.direction][i].y;
+      const px = afterBannerOffset[this.direction][i].x;
+      const py = afterBannerOffset[this.direction][i].y;
       this.afterBanner[i].setOffset( x + px, y + py);
     }
   }
 }
 
-const offset = [
+const afterBannerOffset = [
   [ {x: -3, y:  0}, {x:  3, y:  0}, ], //  0 上
 
   [ {x: -3, y:  2}, {x:  3, y: -2}, ], //  1
