@@ -9,8 +9,6 @@ export class Player extends GameObject {
     options = $safe.call({}, options, { width: 32, height: 32 });
     super(options);
 
-    this.world = options.world;
-
     this.sprite = new Sprite("fighter", 32, 32).setFrameIndex(0).addChildTo(this)
     this.afterBanner = [];
     this.direction = 0;
