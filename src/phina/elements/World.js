@@ -57,19 +57,19 @@ export class World extends DisplayElement {
         if (player.direction > 15) player.direction = 0;
       }
       player.sprite.setFrameIndex(player.direction);
-      if (ct.getKey(Keyboard.KEY_CODE["up"])) {
-        player.speed += 0.1;
-        if (player.speed > 1) player.speed = 1;
-        const rad = MathEx.degToRad(player.direction * 22.5)
-        player.velocity.x += Math.sin(rad) * player.speed;
-        player.velocity.y += -Math.cos(rad) * player.speed;
-        if (player.velocity.length > 2) {
-          player.velocity.normalize();
-          player.velocity.mul(2);
-        }
-      } else {
-        player.speed *= 0.98;
+    }
+    if (ct.getKey(Keyboard.KEY_CODE["up"])) {
+      player.speed += 0.001;
+      if (player.speed > 1) player.speed = 1;
+      const rad = MathEx.degToRad(player.direction * 22.5)
+      player.velocity.x += Math.sin(rad) * player.speed;
+      player.velocity.y += -Math.cos(rad) * player.speed;
+      if (player.velocity.length > 2) {
+        player.velocity.normalize();
+        player.velocity.mul(2);
       }
+    } else {
+      player.speed *= 0.98;
     }
 
     //下に落ちる
