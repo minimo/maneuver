@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import PhinaCanvas from './components/PhinaCanvas'
+import PhinaCanvas from '@/components/PhinaCanvas'
 
 export default {
   components: {

@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
-
-import { DisplayScene } from 'phina.js/build/phina.esm'
+import { DisplayScene } from 'phina.js'
 
 Vue.config.productionTip = false;
 

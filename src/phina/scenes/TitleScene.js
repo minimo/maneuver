@@ -31,7 +31,7 @@ export class TitleScene extends DisplayScene {
           touchLabel: {
             className: Label,
             arguments: {
-              text: "TOUCH START",
+              text: "TOUCH OR SPACE",
               fill: params.fontColor,
               stroke: false,
               fontSize: 32,
