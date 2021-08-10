@@ -48,17 +48,21 @@ export class World extends DisplayElement {
   controlPlayer(app) {
     const player = this.player;
     let ct = app.keyboard;
-    if (this.time % 3 === 0) {
-      if (ct.getKey(Keyboard.KEY_CODE["left"])) {
+    const isUp = ct.getKey(Keyboard.KEY_CODE["up"]);
+    const isLeft = ct.getKey(Keyboard.KEY_CODE["left"]);
+    const isRight = ct.getKey(Keyboard.KEY_CODE["right"]);
+    const isControl = isUp ? this.time % 6 === 0 : this.time % 3 === 0;
+    if (isControl) {
+      if (isLeft) {
         player.direction--;
         if (player.direction < 0) player.direction = 15;
-      } else if (ct.getKey(Keyboard.KEY_CODE["right"])) {
+      } else if (isRight) {
         player.direction++;
         if (player.direction > 15) player.direction = 0;
       }
       player.sprite.setFrameIndex(player.direction);
     }
-    if (ct.getKey(Keyboard.KEY_CODE["up"])) {
+    if (isUp) {
       player.speed += 0.002;
       if (player.speed > 1) player.speed = 1;
       const rad = MathEx.degToRad(player.direction * 22.5)
@@ -73,13 +77,13 @@ export class World extends DisplayElement {
     }
 
     //下に落ちる
-    if (!ct.getKey(Keyboard.KEY_CODE["up"])) player.velocity.y += 0.1;
+    if (!isUp) player.velocity.y += 0.1;
 
     player.position.add(player.velocity);
     player.velocity.mul(0.99);
 
     //アフターバーナー
-    if (ct.getKey(Keyboard.KEY_CODE["up"])) {
+    if (isUp) {
       const v = player.velocity.clone().mul(-1)
       player.afterBanner[0].enable().setVelocity(v);
       player.afterBanner[1].enable().setVelocity(v);
