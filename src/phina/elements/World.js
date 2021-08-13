@@ -1,4 +1,4 @@
-import {DisplayElement, Keyboard, MathEx, Random, RectangleShape} from "phina.js";
+import {DisplayElement, MathEx, Random, RectangleShape} from "phina.js";
 import {Player} from "@/phina/elements/Player";
 import {LAYER, SCREEN} from "@/phina/app/Setting";
 
@@ -7,11 +7,8 @@ export class World extends DisplayElement {
     super(options);
     this.setup();
     this.time = 0;
-  }
 
-  update(_app) {
-    this.controlPlayer(_app);
-    this.time++;
+    this.controlTimer = 0;
   }
 
   setup() {
@@ -45,24 +42,28 @@ export class World extends DisplayElement {
     }
   }
 
+  update(_app) {
+    this.controlPlayer(_app);
+    this.time++;
+  }
+
   controlPlayer(app) {
     const player = this.player;
-    let ct = app.keyboard;
-    const isUp = ct.getKey(Keyboard.KEY_CODE["up"]);
-    const isLeft = ct.getKey(Keyboard.KEY_CODE["left"]);
-    const isRight = ct.getKey(Keyboard.KEY_CODE["right"]);
-    const isControl = isUp ? this.time % 6 === 0 : this.time % 3 === 0;
+    let ct = app.controller;
+    const isControl = ct.up ? this.controlTimer > 6 : this.controlTimer > 3;
     if (isControl) {
-      if (isLeft) {
+      if (ct.left) {
         player.direction--;
         if (player.direction < 0) player.direction = 15;
-      } else if (isRight) {
+        this.controlTimer = 0;
+      } else if (ct.right) {
         player.direction++;
         if (player.direction > 15) player.direction = 0;
+        this.controlTimer = 0;
       }
       player.sprite.setFrameIndex(player.direction);
     }
-    if (isUp) {
+    if (ct.up) {
       player.speed += 0.002;
       if (player.speed > 1) player.speed = 1;
       const rad = MathEx.degToRad(player.direction * 22.5)
@@ -77,13 +78,13 @@ export class World extends DisplayElement {
     }
 
     //下に落ちる
-    if (!isUp) player.velocity.y += 0.1;
+    if (!ct.up) player.velocity.y += 0.1;
 
     player.position.add(player.velocity);
     player.velocity.mul(0.99);
 
     //アフターバーナー
-    if (isUp) {
+    if (ct.up) {
       const v = player.velocity.clone().mul(-1)
       player.afterBanner[0].enable().setVelocity(v);
       player.afterBanner[1].enable().setVelocity(v);
@@ -96,6 +97,9 @@ export class World extends DisplayElement {
       //
     }
 
+    this.controlTimer++;
+
+    //自機を画面中央にする
     this.mapBase.x = SCREEN.width / 2  - player.x - player.velocity.x * 3;
     this.mapBase.y = SCREEN.height / 2 - player.y - player.velocity.y * 3;
   }
