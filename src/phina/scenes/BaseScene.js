@@ -1,13 +1,18 @@
-import {DisplayScene} from "phina.js";
-import {$safe} from "@/phina/extensions/Utils";
+import {DisplayScene, ObjectEx} from "phina.js";
 import {SCREEN} from "@/phina/app/Setting";
 
 export class BaseScene extends DisplayScene {
 
   constructor(options) {
-    super($safe.call({}, options, { width: SCREEN.width, height: SCREEN.height, backgroundColor: 'transparent'}));
+    super(ObjectEx.$safe.call({}, options, BaseScene.defaults));
   }
 
   // eslint-disable-next-line no-unused-vars
   update(_app) {}
+
+  static defaults = {
+    width: SCREEN.width,
+    height: SCREEN.height,
+    backgroundColor: 'transparent'
+  }
 }

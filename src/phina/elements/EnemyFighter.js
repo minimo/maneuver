@@ -1,12 +1,11 @@
-import {Sprite, Vector2} from "phina.js";
+import {ObjectEx, Sprite, Vector2} from "phina.js";
 import {EnemyBase} from "@/phina/elements/EnemyBase";
-import {$safe} from "@/phina/extensions/Utils";
 import {AfterBanner} from "@/phina/elements/AfterBanner";
 import {LAYER} from "@/phina/app/Setting";
 
 export class EnemyFighter extends EnemyBase {
   constructor(options) {
-    options = $safe.call(options, { width: 32, height: 32, player: null })
+    options = ObjectEx.$safe.call(options, { width: 32, height: 32, player: null })
     super(options);
 
     this.sprite = new Sprite("fighter", 32, 32)

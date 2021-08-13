@@ -1,10 +1,9 @@
-import {DisplayScene, Keyboard, Label} from "phina.js";
-import {$safe} from "@/phina/extensions/Utils";
+import {DisplayScene, Keyboard, Label, ObjectEx} from "phina.js";
 
 export class TitleScene extends DisplayScene {
 
   constructor(params) {
-    params = $safe.call({}, params, TitleScene.defaults);
+    params = ObjectEx.$safe.call({}, params, TitleScene.defaults);
     super(params);
 
     this.backgroundColor = params.backgroundColor;

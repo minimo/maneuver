@@ -1,9 +1,8 @@
-import {DisplayElement, RectangleShape} from "phina.js";
-import {$safe} from "@/phina/extensions/Utils";
+import {DisplayElement, ObjectEx, RectangleShape} from "phina.js";
 
 export class GameObject extends DisplayElement {
   constructor(options) {
-    options = $safe.call({}, options, { world: null, width: 16, height: 16 })
+    options = ObjectEx.$safe.call({}, options, { world: null, width: 16, height: 16 })
     super(options);
     this.world = options.world;
     this.collision = new RectangleShape({ width: options.width, height: options.height }).addChildTo(this);
