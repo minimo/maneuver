@@ -10,6 +10,8 @@ export class ParticleSprite extends Sprite {
     scaleDecay: 0.92,
     //ブレンドモード
     blendMode: "lighter",
+    //寿命（フレーム数）
+    lifeSpan: 100,
     //スプライト名
     sprite: {
       assetName: "particle",
@@ -19,7 +21,7 @@ export class ParticleSprite extends Sprite {
   };
 
   constructor(options) {
-    ObjectEx.$safe.call(options || {}, ParticleSprite.defaults)
+    options = ObjectEx.$safe.call({}, options, ParticleSprite.defaults)
     super(options.sprite.assetName, options.sprite.width, options.sprite.height);
 
     this.blendMode = options.blendMode || "lighter";
@@ -43,6 +45,13 @@ export class ParticleSprite extends Sprite {
      */
     this.scaleDecay = new Vector2(0.92, 0.92);
     this.setScaleDecay(options.scaleDecay);
+
+    /**
+     * 寿命（フレーム数）
+     * ０または負数の場合は無限
+     * @type {number}
+     */
+    this.lifeSpan = options.lifeSpan;
   }
 
   update() {
@@ -51,6 +60,9 @@ export class ParticleSprite extends Sprite {
     this.scale.x *= this.scaleDecay.x;
     this.scale.y *= this.scaleDecay.y;
     if (this.scale.x < 0.01 || this.scale.y < 0.01) this.remove();
+
+    this.lifeSpan--;
+    if (this.lifeSpan === 0) this.remove();
   }
 
   /**

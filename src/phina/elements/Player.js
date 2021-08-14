@@ -1,4 +1,4 @@
-import {MathEx, ObjectEx, Sprite, Vector2} from "phina.js";
+import {MathEx, ObjectEx, Sprite} from "phina.js";
 import {GameObject} from "@/phina/elements/GameObject";
 import {AfterBanner} from "@/phina/elements/AfterBanner";
 import {LAYER} from "@/phina/app/Setting";
@@ -26,18 +26,6 @@ export class Player extends GameObject {
      * @type {number}
      */
     this.angle = 0;
-
-    /**
-     * 速度係数
-     * @type {number}
-     */
-    this.accelerator = 1;
-
-    /**
-     * 移動速度
-     * @type {Vector2}
-     */
-    this.velocity = new Vector2(0, 0);
 
     for(let i = 0; i < 2; i++) {
       this.afterBanner[i] = new AfterBanner()

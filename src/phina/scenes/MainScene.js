@@ -7,9 +7,15 @@ import {SCREEN} from "@/phina/app/Setting";
  * メインシーン
  */
 export class MainScene extends BaseScene {
+  static defaults = {
+    width: SCREEN.width,
+    height:SCREEN.height,
+    backgroundColor: 'black',
+  };
 
   constructor(options) {
-    super(ObjectEx.$safe.call({}, options, { width: SCREEN.width, height:SCREEN.height, backgroundColor: 'black' }));
+    options = ObjectEx.$safe.call({}, options, MainScene.defaults);
+    super(options);
 
     /**
      * ワールド管理クラス

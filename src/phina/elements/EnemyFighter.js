@@ -5,7 +5,7 @@ import {LAYER} from "@/phina/app/Setting";
 
 export class EnemyFighter extends EnemyBase {
   constructor(options) {
-    options = ObjectEx.$safe.call(options, { width: 32, height: 32, player: null })
+    options = ObjectEx.$safe.call({}, options, { width: 32, height: 32, player: null })
     super(options);
 
     this.sprite = new Sprite("fighter", 32, 32)
@@ -13,7 +13,6 @@ export class EnemyFighter extends EnemyBase {
       .addChildTo(this);
 
     this.player = options.player;
-    this.velocity = new Vector2(0, 0);
     this.angle = 0;
     this.accelerator = 10;
 

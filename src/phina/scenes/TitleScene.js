@@ -1,20 +1,30 @@
 import {DisplayScene, Keyboard, Label, ObjectEx} from "phina.js";
 
 export class TitleScene extends DisplayScene {
+  static defaults = {
+    title: 'phina.js games',
+    message: '',
 
-  constructor(params) {
-    params = ObjectEx.$safe.call({}, params, TitleScene.defaults);
-    super(params);
+    fontColor: 'white',
+    backgroundColor: 'hsl(200, 80%, 64%)',
+    backgroundImage: '',
 
-    this.backgroundColor = params.backgroundColor;
+    exitType: 'touch',
+  };
+
+  constructor(options) {
+    options = ObjectEx.$safe.call({}, options, TitleScene.defaults);
+    super(options);
+
+    this.backgroundColor = options.backgroundColor;
 
     this.fromJSON({
       children: {
         titleLabel: {
           className: Label,
           arguments: {
-            text: params.title,
-            fill: params.fontColor,
+            text: options.title,
+            fill: options.fontColor,
             stroke: false,
             fontSize: 64,
           },
@@ -24,14 +34,14 @@ export class TitleScene extends DisplayScene {
       }
     });
 
-    if (params.exitType === 'touch') {
+    if (options.exitType === 'touch') {
       this.fromJSON({
         children: {
           touchLabel: {
             className: Label,
             arguments: {
               text: "TOUCH OR SPACE",
-              fill: params.fontColor,
+              fill: options.fontColor,
               stroke: false,
               fontSize: 32,
             },
@@ -50,14 +60,3 @@ export class TitleScene extends DisplayScene {
   }
 
 }
-
-TitleScene.defaults = {
-  title: 'phina.js games',
-  message: '',
-
-  fontColor: 'white',
-  backgroundColor: 'hsl(200, 80%, 64%)',
-  backgroundImage: '',
-
-  exitType: 'touch',
-};

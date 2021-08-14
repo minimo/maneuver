@@ -88,10 +88,7 @@ export class World extends DisplayElement {
     }
 
     //下に落ちる
-    if (!ct.up) player.velocity.y += 0.1;
-
-    player.position.add(player.velocity);
-    player.velocity.mul(0.99);
+    player.isGravity = !ct.up;
 
     //アフターバーナー
     if (ct.up) {
