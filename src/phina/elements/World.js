@@ -6,8 +6,18 @@ export class World extends DisplayElement {
   constructor(options) {
     super(options);
     this.setup();
+
+    /**
+     * 経過フレーム
+     * @type {number}
+     */
     this.time = 0;
 
+    /**
+     * プレイヤーが最後に操作してから経過したフレーム
+     * @private
+     * @type {number}
+     */
     this.controlTimer = 0;
   }
 
@@ -53,28 +63,28 @@ export class World extends DisplayElement {
     const isControl = ct.up ? this.controlTimer > 6 : this.controlTimer > 3;
     if (isControl) {
       if (ct.left) {
-        player.direction--;
-        if (player.direction < 0) player.direction = 15;
+        player.angle--;
+        if (player.angle < 0) player.angle = 15;
         this.controlTimer = 0;
       } else if (ct.right) {
-        player.direction++;
-        if (player.direction > 15) player.direction = 0;
+        player.angle++;
+        if (player.angle > 15) player.angle = 0;
         this.controlTimer = 0;
       }
-      player.sprite.setFrameIndex(player.direction);
+      player.sprite.setFrameIndex(player.angle);
     }
     if (ct.up) {
-      player.speed += 0.002;
-      if (player.speed > 1) player.speed = 1;
-      const rad = MathEx.degToRad(player.direction * 22.5)
-      player.velocity.x += Math.sin(rad) * player.speed;
-      player.velocity.y += -Math.cos(rad) * player.speed;
+      player.accelerator += 0.002;
+      if (player.accelerator > 1) player.accelerator = 1;
+      const rad = MathEx.degToRad(player.angle * 22.5)
+      player.velocity.x += Math.sin(rad) * player.accelerator;
+      player.velocity.y += -Math.cos(rad) * player.accelerator;
       if (player.velocity.length > 2) {
         player.velocity.normalize();
         player.velocity.mul(2);
       }
     } else {
-      player.speed *= 0.98;
+      player.accelerator *= 0.98;
     }
 
     //下に落ちる

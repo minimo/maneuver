@@ -4,27 +4,66 @@ import {ParticleSprite} from "@/phina/elements/ParticleSprite";
 export class AfterBanner extends Accessory {
   constructor(target) {
     super(target);
+
+    /**
+     * パーティクル起点のオフセット座標
+     * @type {Vector2}
+     */
     this.offset = new Vector2(0, 0);
+
+    /**
+     * 速度
+     * @type {Vector2}
+     */
     this.velocity = new Vector2(0, 0);
+
+    /**
+     * 表示フラグ
+     * @type {boolean}
+     */
     this.isDisable = true;
+
+    /**
+     * 前フレーム座標
+     * @type {Vector2|null}
+     */
     this.before = null;
   }
 
+  /**
+   * 所属レイヤーの設定
+   * @param layer
+   * @returns {AfterBanner}
+   */
   setLayer(layer) {
     this.layer = layer;
     return this;
   }
 
+  /**
+   * 有効化
+   * @returns {AfterBanner}
+   */
   enable() {
     this.isDisable = false;
     return this;
   }
 
+  /**
+   * 無効化
+   * @returns {AfterBanner}
+   */
   disable() {
     this.isDisable = true;
     return this;
   }
 
+  /**
+   * オフセット座標の設定
+   * @param {number} x
+   * @param {number} y
+   * @returns {AfterBanner}
+   */
   setOffset(x, y) {
     if (x instanceof Vector2) {
       this.offset.set(x.x, x.y);
@@ -34,13 +73,18 @@ export class AfterBanner extends Accessory {
     return this;
   }
 
+  /**
+   * 速度の設定
+   * @param {number} x
+   * @param {number} y
+   * @returns {AfterBanner}
+   */
   setVelocity(x, y) {
     if (x instanceof Vector2) {
       this.velocity = x.clone().mul(-1);
       return this;
     }
-    this.velocity.x = x;
-    this.velocity.y = y;
+    this.velocity.set(x, y);
     return this;
   }
 

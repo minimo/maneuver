@@ -8,10 +8,35 @@ export class Player extends GameObject {
     options = ObjectEx.$safe.call({}, options, { width: 32, height: 32 });
     super(options);
 
+    /**
+     * 表示スプライト
+     * @private
+     * @type {Sprite}
+     */
     this.sprite = new Sprite("fighter", 32, 32).setFrameIndex(0).addChildTo(this)
+
+    /**
+     * アフターバーナー
+     * @type {AfterBanner[]}
+     */
     this.afterBanner = [];
-    this.direction = 0;
-    this.speed = 1;
+
+    /**
+     * 自機が向いている方向
+     * @type {number}
+     */
+    this.angle = 0;
+
+    /**
+     * 速度係数
+     * @type {number}
+     */
+    this.accelerator = 1;
+
+    /**
+     * 移動速度
+     * @type {Vector2}
+     */
     this.velocity = new Vector2(0, 0);
 
     for(let i = 0; i < 2; i++) {
@@ -23,12 +48,12 @@ export class Player extends GameObject {
   }
 
   update() {
-    const rad = MathEx.degToRad(this.direction * 22.5)
+    const rad = MathEx.degToRad(this.angle * 22.5)
     const x = -Math.sin(rad) * 8;
     const y = Math.cos(rad) * 8;
     for(let i = 0; i < 2; i++) {
-      const px = afterBannerOffset[this.direction][i].x;
-      const py = afterBannerOffset[this.direction][i].y;
+      const px = afterBannerOffset[this.angle][i].x;
+      const py = afterBannerOffset[this.angle][i].y;
       this.afterBanner[i].setOffset( x + px, y + py);
     }
   }

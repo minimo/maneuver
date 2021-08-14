@@ -1,6 +1,9 @@
 import {DisplayScene, ObjectEx} from "phina.js";
 import {SCREEN} from "@/phina/app/Setting";
 
+/**
+ * シーンのベースとなるクラス
+ */
 export class BaseScene extends DisplayScene {
 
   constructor(options) {

@@ -9,9 +9,23 @@ export class MainApp extends CanvasApp {
       console.log("parentElement", this.parentDomElement);
       this.fitScreen();
     }
-    //ゲームパッド管理
+
+    /**
+     * ゲームパッド情報
+     * @type {GamepadManager}
+     */
     this.gamepadManager = new GamepadManager();
+
+    /**
+     * ゲームパッド情報
+     * @type {PhinaGamepad}
+     */
     this.gamepad = this.gamepadManager.get(0);
+
+    /**
+     * コントローラー情報
+     * @type {any}
+     */
     this.controller = {};
 
     //パッド情報を更新

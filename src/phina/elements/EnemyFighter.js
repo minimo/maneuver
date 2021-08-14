@@ -15,7 +15,7 @@ export class EnemyFighter extends EnemyBase {
     this.player = options.player;
     this.velocity = new Vector2(0, 0);
     this.angle = 0;
-    this.speed = 10;
+    this.accelerator = 10;
 
     this.time = 0;
 
@@ -36,9 +36,9 @@ export class EnemyFighter extends EnemyBase {
       if (d > 360) d -= 360;
       this.angle = Math.floor(d / 22.5);
       this.sprite.setFrameIndex(this.angle);
-      this.velocity.add(new Vector2(Math.cos(r) * this.speed, Math.sin(r) * this.speed));
+      this.velocity.add(new Vector2(Math.cos(r) * this.accelerator, Math.sin(r) * this.accelerator));
       this.velocity.normalize();
-      this.velocity.mul(this.speed);
+      this.velocity.mul(this.accelerator);
     }
 
     this.position.add(this.velocity);
