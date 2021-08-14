@@ -1,4 +1,4 @@
-import {Sprite, Vector2} from "phina.js";
+import {ObjectEx, Sprite, Vector2} from "phina.js";
 
 export class ParticleSprite extends Sprite {
   static defaults = {
@@ -8,26 +8,48 @@ export class ParticleSprite extends Sprite {
     scale: 1.0,
     // スケール減衰率
     scaleDecay: 0.92,
+    //ブレンドモード
+    blendMode: "lighter",
+    //スプライト名
+    sprite: {
+      assetName: "particle",
+      width: 16,
+      height: 16,
+    },
   };
 
   constructor(options) {
-    super("particle", 16, 16);
+    ObjectEx.$safe.call(options || {}, ParticleSprite.defaults)
+    super(options.sprite.assetName, options.sprite.width, options.sprite.height);
 
-    this.blendMode = 'lighter';
-    const scale = options.scale || ParticleSprite.defaults.scale;
-    this.scale.set(scale, scale);
+    this.blendMode = options.blendMode || "lighter";
 
-    /** @type {Vector2} */
+    const scale = options.scale;
+    if (scale instanceof Vector2) {
+      this.scale.set(scale.x, scale.y);
+    } else {
+      this.scale.set(scale, scale);
+    }
+
+    /**
+     * 速度
+     * @type {Vector2}
+     */
     this.velocity = options.velocity || new Vector2(0, 0);
-    /** @type {number} */
-    this.scaleDecay = options.scaleDecay || ParticleSprite.defaults.scaleDecay;
+
+    /**
+     * スケール減衰率
+     * @type {Vector2}
+     */
+    this.scaleDecay = new Vector2(0.92, 0.92);
+    this.setScaleDecay(options.scaleDecay);
   }
 
   update() {
     this.position.add(this.velocity);
     this.velocity.mul(0.99);
-    this.scale.mul(this.scaleDecay);
-
+    this.scale.x *= this.scaleDecay.x;
+    this.scale.y *= this.scaleDecay.y;
     if (this.scale.x < 0.01 || this.scale.y < 0.01) this.remove();
   }
 
@@ -49,11 +71,15 @@ export class ParticleSprite extends Sprite {
 
   /**
    * 減衰率を設定する
-   * @param {number} decay
+   * @param {number|Vector2} decay
    * @returns {ParticleSprite}
    */
-  setDecay(decay) {
-    this.scaleDecay = decay;
+  setScaleDecay(decay) {
+    if (decay instanceof Vector2) {
+      this.scaleDecay.set(decay.x, decay.y);
+    } else {
+      this.scaleDecay.set(decay, decay);
+    }
     return this;
   }
 }
