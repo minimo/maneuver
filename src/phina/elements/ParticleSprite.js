@@ -35,7 +35,7 @@ export class ParticleSprite extends Sprite {
      * 速度
      * @type {Vector2}
      */
-    this.velocity = options.velocity || new Vector2(0, 0);
+    this.velocity = new Vector2(0, 0);
 
     /**
      * スケール減衰率
@@ -59,7 +59,7 @@ export class ParticleSprite extends Sprite {
    * @param {number} y
    * @returns {ParticleSprite}
    */
-  setVelocity(x, y) {
+  setVelocity(x, y = undefined) {
     if (x instanceof Vector2) {
       this.velocity = x.clone();
       return this;
