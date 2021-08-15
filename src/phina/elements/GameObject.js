@@ -1,4 +1,4 @@
-import {DisplayElement, ObjectEx, RectangleShape, Vector2} from "phina.js";
+import {DisplayElement, ObjectEx, RectangleShape, Sprite, Vector2} from "phina.js";
 
 export class GameObject extends DisplayElement {
   static defaults = {
@@ -19,6 +19,13 @@ export class GameObject extends DisplayElement {
      * @type {World|null}
      */
     this.world = options.world;
+
+    /**
+     * 表示スプライト
+     * @protected
+     * @type {Sprite|null}
+     */
+    this.sprite = null;
 
     /**
      * 当たり判定ボックス
@@ -72,6 +79,18 @@ export class GameObject extends DisplayElement {
    */
   // eslint-disable-next-line no-unused-vars
   update(_app) {}
+
+  /**
+   * 表示スプライトの設定
+   * @param {string} image
+   * @param {number} width
+   * @param {number} height
+   */
+  setSprite(image, width = undefined, height = undefined) {
+    if (this.sprite) this.image.remove();
+    this.sprite = new Sprite(image, width, height).addChildTo(this);
+    return this;
+  }
 
   /**
    * 速度を設定する
