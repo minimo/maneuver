@@ -1,7 +1,7 @@
 import {MathEx, ObjectEx} from "phina.js";
 import {GameObject} from "@/phina/elements/GameObject";
 import {AfterBanner} from "@/phina/elements/AfterBanner";
-import {LAYER, SCREEN} from "@/phina/app/Setting";
+import {LAYER} from "@/phina/app/Setting";
 
 export class Player extends GameObject {
   constructor(options) {
@@ -34,7 +34,14 @@ export class Player extends GameObject {
      * @private
      * @type {number}
      */
-    this.controlTimer = 0;
+    this.controlInterval = 0;
+
+    /**
+     * プレイヤーが最後にショットを撃ってから経過したフレーム
+     * @private
+     * @type {number}
+     */
+    this.shotInterval = 0;
   }
 
   update(_app) {
@@ -51,17 +58,17 @@ export class Player extends GameObject {
 
   control(app) {
     const player = this;
-    let ct = app.controller;
-    const isControl = ct.up ? this.controlTimer > 6 : this.controlTimer > 3;
+    const ct = app.controller;
+    const isControl = ct.up ? this.controlInterval > 6 : this.controlInterval > 3;
     if (isControl) {
       if (ct.left) {
         player.angle--;
         if (player.angle < 0) player.angle = 15;
-        this.controlTimer = 0;
+        this.controlInterval = 0;
       } else if (ct.right) {
         player.angle++;
         if (player.angle > 15) player.angle = 0;
-        this.controlTimer = 0;
+        this.controlInterval = 0;
       }
       player.sprite.setFrameIndex(player.angle);
     }
@@ -92,15 +99,17 @@ export class Player extends GameObject {
       player.afterBanner[1].disable();
     }
 
-    if (ct.a) {
-      //
+    if (ct.a && this.shotInterval > 12) {
+      this.world.enterShot(this);
+      this.shotInterval = 0;
+    }
+    if (ct.b && this.shotInterval > 20) {
+      this.world.enterLaser(this);
+      this.shotInterval = 0;
     }
 
-    this.controlTimer++;
-
-    //自機を画面中央にする
-    this.world.mapBase.x = SCREEN.width / 2  - player.x - player.velocity.x * 3;
-    this.world.mapBase.y = SCREEN.height / 2 - player.y - player.velocity.y * 3;
+    this.controlInterval++;
+    this.shotInterval++;
   }
 }
 
