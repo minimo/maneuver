@@ -1,4 +1,4 @@
-import {DisplayElement, ObjectEx, RectangleShape, Sprite, Vector2} from "phina.js";
+import {DisplayElement, ObjectEx, Sprite, Vector2} from "phina.js";
 
 export class GameObject extends DisplayElement {
   static defaults = {
@@ -29,10 +29,9 @@ export class GameObject extends DisplayElement {
 
     /**
      * 当たり判定ボックス
-     * @type {RectangleShape}
+     * @type {DisplayElement}
      */
-    this.collision = new RectangleShape({ width: options.width, height: options.height }).addChildTo(this);
-    this.collision.alpha = 0.0;
+    this.collision = new DisplayElement({ width: options.width, height: options.height }).addChildTo(this);
 
     /**
      * 当たり判定有効フラグ
@@ -71,6 +70,9 @@ export class GameObject extends DisplayElement {
       this.velocity.mul(0.99);
       this.time++;
     });
+
+    //リムーブ処理
+    this.on('removed', () => this.destroy());
   }
 
   /**
@@ -118,5 +120,12 @@ export class GameObject extends DisplayElement {
     this.collision.width = width;
     this.collision.height = height;
     return this;
+  }
+
+  /**
+   * オブジェクト破棄処理
+   */
+  destroy() {
+    //
   }
 }

@@ -49,7 +49,7 @@ export class World extends DisplayElement {
 
   /**
    * ショットの投入
-   * @param {Player} shooter
+   * @param {import('./GameObject').GameObject} shooter
    */
   enterShot(shooter) {
     const shot = new Shot({world: this})
@@ -63,7 +63,7 @@ export class World extends DisplayElement {
 
   /**
    * レーザーの投入
-   * @param shooter
+   * @param {import('./GameObject').GameObject} shooter
    */
   enterLaser(shooter) {
     const laser = new Laser({world: this, shooter})
