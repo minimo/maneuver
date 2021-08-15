@@ -28,14 +28,14 @@ export class Laser extends GameObject {
      * ショット寿命
      * @type {number}
      */
-    this.lifeSpan = 10;
+    this.lifeSpan = 20;
   }
 
   update() {
     if (this.time > this.lifeSpan) this.remove();
-    this.sprite.alpha -= 0.05;
     if (this.shooter) {
       this.setPosition(this.shooter.x, this.shooter.y);
+      this.rotation = this.shooter.angle * 22.5;
     }
   }
 }
