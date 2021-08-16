@@ -8,6 +8,12 @@ export class World extends DisplayElement {
   constructor(options) {
     super(options);
     this.setup();
+
+    /**
+     * 重力係数
+     * @type {number}
+     */
+    this.gravity = 0.1;
   }
 
   /**

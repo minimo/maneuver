@@ -65,7 +65,11 @@ export class GameObject extends DisplayElement {
 
     //基本処理
     this.on('enterframe', () => {
-      if (this.isGravity) this.velocity.y += 0.1;
+
+      if (this.isGravity) {
+        const gravity = this.world ? this.world.gravity : 0.1;
+        this.velocity.y += gravity;
+      }
       this.position.add(this.velocity);
       this.velocity.mul(0.99);
       this.time++;
