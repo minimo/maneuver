@@ -12,6 +12,12 @@ export class Player extends GameObject {
     this.sprite.setFrameIndex(0);
 
     /**
+     * 最大速度
+     * @type {number}
+     */
+    this.maxVelocity = 1;
+
+    /**
      * 自機が向いている方向
      * @type {number}
      */
@@ -78,9 +84,9 @@ export class Player extends GameObject {
       const rad = MathEx.degToRad(player.angle * 22.5)
       player.velocity.x += Math.sin(rad) * player.accelerator;
       player.velocity.y += -Math.cos(rad) * player.accelerator;
-      if (player.velocity.length > 2) {
+      if (player.velocity.length > this.maxVelocity) {
         player.velocity.normalize();
-        player.velocity.mul(2);
+        player.velocity.mul(this.maxVelocity);
       }
     } else {
       player.accelerator *= 0.98;
