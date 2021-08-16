@@ -11,12 +11,6 @@ export class EnemyFighter extends EnemyBase {
     this.setSprite("fighter", 32, 32);
 
     /**
-     * プレイヤーへの参照
-     * @type {import('./Player').Player|null}
-     */
-    this.player = options.player;
-
-    /**
      * 方角
      * @type {number}
      */
@@ -55,7 +49,5 @@ export class EnemyFighter extends EnemyBase {
     }
 
     this.position.add(this.velocity);
-
-    this.time++;
   }
 }

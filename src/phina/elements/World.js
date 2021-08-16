@@ -3,6 +3,7 @@ import {Player} from "@/phina/elements/Player";
 import {LAYER, SCREEN} from "@/phina/app/Setting";
 import {Shot} from "@/phina/elements/Shot";
 import {Laser} from "@/phina/elements/Laser";
+import {Decoy} from "@/phina/elements/Decoy";
 
 export class World extends DisplayElement {
   constructor(options) {
@@ -14,6 +15,12 @@ export class World extends DisplayElement {
      * @type {number}
      */
     this.gravity = 0.1;
+
+    /**
+     * 経過フレーム
+     * @type {number}
+     */
+    this.time = 0;
   }
 
   /**
@@ -53,6 +60,18 @@ export class World extends DisplayElement {
     }
   }
 
+  update() {
+    //自機を画面中央にする
+    this.mapBase.x = SCREEN.width / 2  - this.player.x - this.player.velocity.x * 3;
+    this.mapBase.y = SCREEN.height / 2 - this.player.y - this.player.velocity.y * 3;
+
+    if (this.time % 120 === 0) {
+      this.enterDecoy(MathEx.randint(-100, 100), MathEx.randint(-1000, 1000));
+    }
+
+    this.time++;
+  }
+
   /**
    * ショットの投入
    * @param {import('./GameObject').GameObject} shooter
@@ -79,9 +98,14 @@ export class World extends DisplayElement {
     laser.rotation = shooter.angle * 22.5;
   }
 
-  update() {
-    //自機を画面中央にする
-    this.mapBase.x = SCREEN.width / 2  - this.player.x - this.player.velocity.x * 3;
-    this.mapBase.y = SCREEN.height / 2 - this.player.y - this.player.velocity.y * 3;
+  /**
+   * ダミー敵の投入
+   * @param {number} x
+   * @param {number} y
+   */
+  enterDecoy(x, y) {
+    new Decoy()
+      .setPosition(x, y)
+      .addChildTo(this.mapLayer[LAYER.enemy]);
   }
 }

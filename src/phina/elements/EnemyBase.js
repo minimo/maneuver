@@ -9,5 +9,11 @@ export class EnemyBase extends GameObject {
      * @type {string}
      */
     this.attribute = "enemy";
+
+    /**
+     * プレイヤーへの参照
+     * @type {import('./Player').Player|null}
+     */
+    this.player = options.player;
   }
 }
