@@ -12,6 +12,12 @@ export class Player extends GameObject {
     this.sprite.setFrameIndex(0);
 
     /**
+     * オブジェクト属性
+     * @type {string}
+     */
+    this.attribute = "player";
+
+    /**
      * 最大速度
      * @type {number}
      */

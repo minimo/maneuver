@@ -15,6 +15,12 @@ export class GameObject extends DisplayElement {
     super(options);
 
     /**
+     * オブジェクト属性
+     * @type {string}
+     */
+    this.attribute = "base";
+
+    /**
      * 所属するWorldクラス
      * @type {World|null}
      */

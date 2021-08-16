@@ -1,4 +1,4 @@
-import {ObjectEx, Sprite, Vector2} from "phina.js";
+import {ObjectEx, Vector2} from "phina.js";
 import {EnemyBase} from "@/phina/elements/EnemyBase";
 import {AfterBanner} from "@/phina/elements/AfterBanner";
 import {LAYER} from "@/phina/app/Setting";
@@ -8,16 +8,30 @@ export class EnemyFighter extends EnemyBase {
     options = ObjectEx.$safe.call({}, options, { width: 32, height: 32, player: null })
     super(options);
 
-    this.sprite = new Sprite("fighter", 32, 32)
-      .setFrameIndex(0)
-      .addChildTo(this);
+    this.setSprite("fighter", 32, 32);
 
+    /**
+     * プレイヤーへの参照
+     * @type {import('./Player').Player|null}
+     */
     this.player = options.player;
+
+    /**
+     * 方角
+     * @type {number}
+     */
     this.angle = 0;
+
+    /**
+     * 加速度
+     * @type {number}
+     */
     this.accelerator = 10;
 
-    this.time = 0;
-
+    /**
+     * アフターバーナー
+     * @type {AfterBanner}
+     */
     this.afterBanner = new AfterBanner()
       .setLayer(this.world.mapLayer[LAYER.effectBackground])
       .attachTo(this);
