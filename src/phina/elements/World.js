@@ -96,6 +96,10 @@ export class World extends DisplayElement {
   }
 
   checkCollision() {
+    // this.layers.enemy.children.forEach(e => {
+    //   this.layers.player.children.forEach(p => {
+    //   })
+    // })
   }
 
   /**
