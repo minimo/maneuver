@@ -8,7 +8,44 @@ import {Decoy} from "@/phina/elements/Decoy";
 export class World extends DisplayElement {
   constructor(options) {
     super(options);
-    this.setup();
+
+    /**
+     * 基底エレメント
+     * @type {DisplayElement}
+     */
+    this.mapBase = new DisplayElement().setPosition(0, 0).addChildTo(this);
+
+    /**
+     * レイヤー
+     * @type {DisplayElement[]}
+     */
+    this.mapLayer = [];
+    for (let i = 0; i < LAYER.num; i++) {
+      this.mapLayer[i] = new DisplayElement().addChildTo(this.mapBase);
+    }
+
+
+    /**
+     * レイヤーアクセス簡略
+     * @type {{effectForeground: DisplayElement, background: DisplayElement, effectBackground: DisplayElement, enemy: DisplayElement, map: DisplayElement, foreGround: DisplayElement, player: DisplayElement}}
+     */
+    this.layers = {
+      foreGround: this.mapLayer[LAYER.foreGround],
+      effectForeground: this.mapLayer[LAYER.effectForeground],
+      player: this.mapLayer[LAYER.player],
+      enemy: this.mapLayer[LAYER.enemy],
+      effectBackground: this.mapLayer[LAYER.effectBackground],
+      background: this.mapLayer[LAYER.background],
+      map: this.mapLayer[LAYER.map],
+    };
+
+    /**
+     * プレイヤーオブジェクト
+     * @type {Player}
+     */
+    this.player = new Player({ world: this })
+      .setPosition(SCREEN.width / 2, SCREEN.height / 2 - 100)
+      .addChildTo(this.layers.player);
 
     /**
      * 重力係数
@@ -21,23 +58,6 @@ export class World extends DisplayElement {
      * @type {number}
      */
     this.time = 0;
-  }
-
-  /**
-   * セットアップ
-   */
-  setup() {
-    this.mapBase = new DisplayElement().setPosition(0, 0).addChildTo(this);
-
-    //レイヤー構築
-    this.mapLayer = [];
-    for (let i = 0; i < LAYER.num; i++) {
-      this.mapLayer[i] = new DisplayElement().addChildTo(this.mapBase);
-    }
-
-    this.player = new Player({ world: this })
-        .setPosition(SCREEN.width / 2, SCREEN.height / 2 - 100)
-        .addChildTo(this.mapLayer[LAYER.player]);
 
     this.setupMap();
   }
@@ -56,7 +76,7 @@ export class World extends DisplayElement {
         cornerRadius: 0,
         x: Random.randint(-10000, 10000),
         y: Random.randint(-5000, 5000),
-      }).addChildTo(this.mapLayer[LAYER.background]);
+      }).addChildTo(this.layers.background);
     }
   }
 
@@ -69,7 +89,13 @@ export class World extends DisplayElement {
       this.enterDecoy(MathEx.randint(-100, 100), MathEx.randint(-1000, 1000));
     }
 
+    //当たり判定チェック
+    this.checkCollision();
+
     this.time++;
+  }
+
+  checkCollision() {
   }
 
   /**
@@ -80,7 +106,7 @@ export class World extends DisplayElement {
     const shot = new Shot({world: this})
       .setPosition(shooter.x, shooter.y)
       .setVelocity(1, 0)
-      .addChildTo(this.mapLayer[LAYER.player]);
+      .addChildTo(this.layers.player);
     const rad = MathEx.degToRad(shooter.angle * 22.5)
     shot.velocity.x += Math.sin(rad) * 30;
     shot.velocity.y += -Math.cos(rad) * 30;
@@ -94,7 +120,7 @@ export class World extends DisplayElement {
     const laser = new Laser({world: this, shooter})
       .setPosition(shooter.x, shooter.y)
       .setVelocity(1, 0)
-      .addChildTo(this.mapLayer[LAYER.player]);
+      .addChildTo(this.layers.player);
     laser.rotation = shooter.angle * 22.5;
   }
 
@@ -106,6 +132,6 @@ export class World extends DisplayElement {
   enterDecoy(x, y) {
     new Decoy()
       .setPosition(x, y)
-      .addChildTo(this.mapLayer[LAYER.enemy]);
+      .addChildTo(this.layers.enemy);
   }
 }

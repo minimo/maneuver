@@ -7,6 +7,7 @@ export class Shot extends GameObject {
     //基底クラス関連設定
     this.setSprite("particle", 16, 16);
     this.isGravity = false;
+    this.attribute = "player-shot";
 
     /**
      * ショット寿命

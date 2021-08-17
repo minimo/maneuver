@@ -21,7 +21,12 @@ export class Laser extends GameObject {
 
     //基底クラス関連設定
     this.isGravity = false;
+    this.attribute = "player-laser"
 
+    /**
+     * 撃った人
+     * @type {GameObject|*}
+     */
     this.shooter = options.shooter;
 
     /**
