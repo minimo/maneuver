@@ -44,6 +44,10 @@ export class Laser extends GameObject {
   }
 
   update() {
+    if (this.beforePosition.x === 0 && this.beforePosition.y === 0) {
+      this.beforePosition.set(this.position.x, this.position.y);
+      this.beforeRotation = this.rotation;
+    }
     if (this.time > this.lifeSpan) this.remove();
     if (this.shooter) {
       this.setPosition(this.shooter.x, this.shooter.y);
