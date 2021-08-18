@@ -24,7 +24,7 @@ phina.define("MainScene", {
   // 初期化
   init: function() {
     // 親クラス初期化
-    this.superInit({width: 1280, height: 1280});
+    this.superInit({width: 1280 * 2, height: 1280 * 2});
     // 背景色
     this.backgroundColor = 'transparent';
     // Sprite
@@ -33,7 +33,7 @@ phina.define("MainScene", {
       for (let x = 0; x < 20; x++) {
         if (num > 359) continue;
         const ret = ('0000' + num).slice(-4);
-        Sprite(ret).addChildTo(this).setPosition(x * 64 + 32, y * 64 + 32);
+        Sprite(ret).addChildTo(this).setPosition(x * 128 + 64, y * 128 + 64);
         num++;
       }
     }
@@ -49,8 +49,8 @@ phina.main(function() {
     startLabel: 'main',
     // アセット読み込み
     assets: ASSETS,
-    width: 1280,
-    height: 1280,
+    width: 1280 * 2,
+    height: 1280 * 2,
     backgroundColor: 'transparent',
   });
   // fps表示

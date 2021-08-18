@@ -14756,6 +14756,8 @@ phina.namespace(function() {
         if (options.exitType === 'auto') {
           this.app.popScene();
         }
+        this.gauge.visible = false;
+
         this.flare('loaded');
       }.bind(this);
 
