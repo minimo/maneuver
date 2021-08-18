@@ -56,7 +56,7 @@ export class Laser extends GameObject {
     if (this.time > this.lifeSpan) this.remove();
     if (this.shooter) {
       this.setPosition(this.shooter.x, this.shooter.y);
-      this.setRotation(this.shooter.angle * 22.5);
+      this.setRotation(this.shooter.angle);
       this.afterImage();
     }
     this.beforePosition.set(this.position.x, this.position.y);

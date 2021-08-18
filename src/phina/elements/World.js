@@ -111,7 +111,7 @@ export class World extends DisplayElement {
       .setPosition(shooter.x, shooter.y)
       .setVelocity(1, 0)
       .addChildTo(this.layers.player);
-    const rad = MathEx.degToRad(shooter.angle * 22.5)
+    const rad = MathEx.degToRad(shooter.angle)
     shot.velocity.x += Math.sin(rad) * 30;
     shot.velocity.y += -Math.cos(rad) * 30;
   }
@@ -125,7 +125,7 @@ export class World extends DisplayElement {
       .setPosition(shooter.x, shooter.y)
       .setVelocity(1, 0)
       .addChildTo(this.layers.player);
-    laser.rotation = shooter.angle * 22.5;
+    laser.rotation = shooter.angle;
   }
 
   /**

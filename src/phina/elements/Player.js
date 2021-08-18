@@ -42,11 +42,11 @@ export class Player extends GameObject {
     }
 
     /**
-     * プレイヤーが最後に操作してから経過したフレーム
+     * ロール速度
      * @private
      * @type {number}
      */
-    this.controlInterval = 0;
+    this.rollSpeed = 4;
 
     /**
      * プレイヤーが最後にショットを撃ってから経過したフレーム
@@ -57,13 +57,13 @@ export class Player extends GameObject {
   }
 
   update(_app) {
-    const rad = MathEx.degToRad(this.angle * 22.5)
+    const rad = MathEx.degToRad(this.angle)
     const x = -Math.sin(rad) * 8;
     const y = Math.cos(rad) * 8;
     for(let i = 0; i < 2; i++) {
-      const px = afterBannerOffset[this.angle][i].x;
-      const py = afterBannerOffset[this.angle][i].y;
-      this.afterBanner[i].setOffset( x + px, y + py);
+      // const px = afterBannerOffset[this.angle][i].x;
+      // const py = afterBannerOffset[this.angle][i].y;
+      this.afterBanner[i].setOffset(x, y);
     }
     this.control(_app);
   }
@@ -71,23 +71,21 @@ export class Player extends GameObject {
   control(app) {
     const player = this;
     const ct = app.controller;
-    const isControl = ct.up ? this.controlInterval > 6 : this.controlInterval > 3;
-    if (isControl) {
-      if (ct.left) {
-        player.angle--;
-        if (player.angle < 0) player.angle = 15;
-        this.controlInterval = 0;
-      } else if (ct.right) {
-        player.angle++;
-        if (player.angle > 15) player.angle = 0;
-        this.controlInterval = 0;
-      }
-      player.sprite.setFrameIndex(player.angle);
+    const rollSpeed = ct.up ? this.rollSpeed = 3 : this.rollSpeed = 4;
+    if (ct.left) {
+      player.angle -= rollSpeed;
+      if (player.angle < 0) player.angle = 359;
+      this.controlInterval = 0;
+    } else if (ct.right) {
+      player.angle += rollSpeed;
+      if (player.angle > 359) player.angle = 0;
+      this.controlInterval = 0;
     }
+    player.sprite.setFrameIndex(player.angle);
     if (ct.up) {
       player.accelerator += 0.002;
       if (player.accelerator > 1) player.accelerator = 1;
-      const rad = MathEx.degToRad(player.angle * 22.5)
+      const rad = MathEx.degToRad(player.angle)
       player.velocity.x += Math.sin(rad) * player.accelerator;
       player.velocity.y += -Math.cos(rad) * player.accelerator;
       if (player.velocity.length > this.maxVelocity) {
@@ -125,6 +123,7 @@ export class Player extends GameObject {
   }
 }
 
+/*
 const afterBannerOffset = [
   [ {x: -3, y:  0}, {x:  3, y:  0}, ], //  0 上
 
@@ -150,3 +149,4 @@ const afterBannerOffset = [
   [ {x: -2, y:  2}, {x:  2, y:  1}, ], // 14
   [ {x: -3, y:  1}, {x:  3, y:  0}, ], // 15
 ];
+*/
