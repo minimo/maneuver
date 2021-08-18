@@ -75,11 +75,11 @@ export class AfterBanner extends Accessory {
 
   /**
    * 速度の設定
-   * @param {number} x
+   * @param {number|Vector2} x
    * @param {number} y
    * @returns {AfterBanner}
    */
-  setVelocity(x, y) {
+  setVelocity(x, y = undefined) {
     if (x instanceof Vector2) {
       this.velocity = x.clone().mul(-1);
       return this;

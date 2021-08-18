@@ -58,11 +58,9 @@ export class Player extends GameObject {
 
   update(_app) {
     const rad = MathEx.degToRad(this.angle)
-    const x = -Math.sin(rad) * 8;
-    const y = Math.cos(rad) * 8;
+    const x = -Math.sin(rad) * 12;
+    const y = Math.cos(rad) * 12;
     for(let i = 0; i < 2; i++) {
-      // const px = afterBannerOffset[this.angle][i].x;
-      // const py = afterBannerOffset[this.angle][i].y;
       this.afterBanner[i].setOffset(x, y);
     }
     this.control(_app);
@@ -103,7 +101,7 @@ export class Player extends GameObject {
     if (ct.up) {
       const v = player.velocity.clone().mul(-1)
       player.afterBanner[0].enable().setVelocity(v);
-      player.afterBanner[1].enable().setVelocity(v);
+      // player.afterBanner[1].enable().setVelocity(v);
     } else {
       player.afterBanner[0].disable();
       player.afterBanner[1].disable();
@@ -122,31 +120,3 @@ export class Player extends GameObject {
     this.shotInterval++;
   }
 }
-
-/*
-const afterBannerOffset = [
-  [ {x: -3, y:  0}, {x:  3, y:  0}, ], //  0 上
-
-  [ {x: -4, y:  1}, {x:  1, y:  3}, ], //  1
-  [ {x: -2, y:  0}, {x:  2, y:  2}, ], //  2
-  [ {x: -3, y:  3}, {x:  0, y: -1}, ], //  3
-
-  [ {x:  0, y:  0}, {x:  0, y:  0}, ], //  4 左
-
-  [ {x: -3, y:  0}, {x:  3, y:  0}, ], //  5
-  [ {x: -1, y:  0}, {x:  2, y:  1}, ], //  6
-  [ {x: -3, y:  1}, {x:  3, y:  0}, ], //  7
-
-  [ {x: -3, y:  0}, {x:  3, y:  0}, ], //  8 下
-
-  [ {x: -3, y:  2}, {x:  3, y:  0}, ], //  9
-  [ {x: -2, y:  2}, {x:  1, y: -2}, ], // 10
-  [ {x: -3, y:  0}, {x:  3, y:  0}, ], // 11
-
-  [ {x:  0, y:  0}, {x:  0, y:  0}, ], // 12 右
-
-  [ {x: -3, y:  3}, {x:  0, y: -1}, ], // 13
-  [ {x: -2, y:  2}, {x:  2, y:  1}, ], // 14
-  [ {x: -3, y:  1}, {x:  3, y:  0}, ], // 15
-];
-*/
