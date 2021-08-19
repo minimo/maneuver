@@ -80,8 +80,9 @@ export class Player extends GameObject {
       this.controlInterval = 0;
     }
     player.sprite.setFrameIndex(player.angle);
+
     if (ct.up) {
-      player.accelerator += 0.002;
+      player.accelerator += 0.001;
       if (player.accelerator > 1) player.accelerator = 1;
       const rad = MathEx.degToRad(player.angle)
       player.velocity.x += Math.sin(rad) * player.accelerator;
@@ -104,14 +105,14 @@ export class Player extends GameObject {
       // player.afterBanner[1].enable().setVelocity(v);
     } else {
       player.afterBanner[0].disable();
-      player.afterBanner[1].disable();
+      // player.afterBanner[1].disable();
     }
 
     if (ct.a && this.shotInterval > 12) {
       this.world.enterShot(this);
       this.shotInterval = 0;
     }
-    if (ct.b && this.shotInterval > 20) {
+    if (ct.b && this.shotInterval > 10) {
       this.world.enterLaser(this);
       this.shotInterval = 0;
     }
