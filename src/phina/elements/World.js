@@ -109,6 +109,7 @@ export class World extends DisplayElement {
           if (obj1.attribute.indexOf("enemy") !== -1 && obj2.attribute.indexOf("enemy") !== -1) return;
           if (obj1.attribute === "player-shot" && obj2.attribute === "enemy") {
             console.log("hit player shot");
+            obj2.remove();
           }
           obj1.isHit = true;
           obj2.isHit = true;

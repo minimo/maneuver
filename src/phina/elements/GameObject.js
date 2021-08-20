@@ -51,8 +51,8 @@ export class GameObject extends DisplayElement {
      * 当たり判定可視フラグ
      * @type {boolean}
      */
-    this.isDisplayCollision = false;
-    if (this.isDisplayCollision) {
+    this.isVisibleCollision = false;
+    if (this.isVisibleCollision) {
       new RectangleShape({ width: options.width, height: options.height }).addChildTo(this.collision).setAlpha(0.3);
     }
 
