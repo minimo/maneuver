@@ -1,4 +1,4 @@
-import {DisplayElement, ObjectEx, Sprite, Vector2} from "phina.js";
+import {DisplayElement, ObjectEx, RectangleShape, Sprite, Vector2} from "phina.js";
 
 export class GameObject extends DisplayElement {
   static defaults = {
@@ -25,6 +25,7 @@ export class GameObject extends DisplayElement {
      * @type {World|null}
      */
     this.world = options.world;
+    const collisionLayer = this.world ? this.world.layers.collision : this;
 
     /**
      * 表示スプライト
@@ -34,16 +35,38 @@ export class GameObject extends DisplayElement {
     this.sprite = null;
 
     /**
+     * 当たり判定タイプ(rect|circle|line)
+     * @type {*|string}
+     */
+    this.collisionType = options.collisionType || "rect";
+
+    /**
      * 当たり判定ボックス
      * @type {DisplayElement}
      */
-    this.collision = new DisplayElement({ width: options.width, height: options.height }).addChildTo(this);
+    this.collision = new DisplayElement({ width: options.width, height: options.height }).addChildTo(collisionLayer);
+    this.collision.parentObject = this;
+
+    /**
+     * 当たり判定可視フラグ
+     * @type {boolean}
+     */
+    this.isDisplayCollision = false;
+    if (this.isDisplayCollision) {
+      new RectangleShape({ width: options.width, height: options.height }).addChildTo(this.collision).setAlpha(0.3);
+    }
 
     /**
      * 当たり判定有効フラグ
      * @type {boolean}
      */
-    this.isCollision = true;
+    this.isEnableCollision = true;
+
+    /**
+     * 接触フラグ（毎フレーム事に外部更新される）
+     * @type {boolean}
+     */
+    this.isHit = false;
 
     /**
      * 重力影響フラグ
@@ -78,11 +101,15 @@ export class GameObject extends DisplayElement {
       }
       this.position.add(this.velocity);
       this.velocity.mul(0.99);
+      this.collision.setPosition(this.position.x, this.position.y);
       this.time++;
     });
 
     //リムーブ処理
-    this.on('removed', () => this.destroy());
+    this.on('removed', () => {
+      this.destroy();
+      this.collision.remove();
+    });
   }
 
   /**
@@ -118,6 +145,14 @@ export class GameObject extends DisplayElement {
     this.velocity.x = x;
     this.velocity.y = y;
     return this;
+  }
+
+  /**
+   * 当たり判定タイプを設定
+   * @param {string} type
+   */
+  setCollisionType(type) {
+    this.collisionType = type;
   }
 
   /**

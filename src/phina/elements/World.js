@@ -26,10 +26,10 @@ export class World extends DisplayElement {
 
 
     /**
-     * レイヤーアクセス簡略
-     * @type {{effectForeground: DisplayElement, background: DisplayElement, effectBackground: DisplayElement, enemy: DisplayElement, map: DisplayElement, foreGround: DisplayElement, player: DisplayElement}}
+     * レイヤー簡略アクセス
      */
     this.layers = {
+      collision: this.mapLayer[LAYER.collision],
       foreGround: this.mapLayer[LAYER.foreGround],
       effectForeground: this.mapLayer[LAYER.effectForeground],
       player: this.mapLayer[LAYER.player],
@@ -96,10 +96,25 @@ export class World extends DisplayElement {
   }
 
   checkCollision() {
-    // this.layers.enemy.children.forEach(e => {
-    //   this.layers.player.children.forEach(p => {
-    //   })
-    // })
+    const copyCollision = this.layers.collision.children.concat();
+    this.layers.collision.children.forEach(e => e.parentObject.isHit = false);
+    this.layers.collision.children.forEach(e1 => {
+      if (e1.parentObject.isHit) return;
+      copyCollision.forEach(e2 => {
+        if (e1.hitTestElement(e2)) {
+          if (e1 === e2) return;
+          const obj1 = e1.parentObject;
+          const obj2 = e2.parentObject;
+          if (obj1.attribute.indexOf("player") !== -1 && obj2.attribute.indexOf("player") !== -1) return;
+          if (obj1.attribute.indexOf("enemy") !== -1 && obj2.attribute.indexOf("enemy") !== -1) return;
+          if (obj1.attribute === "player-shot" && obj2.attribute === "enemy") {
+            console.log("hit player shot");
+          }
+          obj1.isHit = true;
+          obj2.isHit = true;
+        }
+      })
+    })
   }
 
   /**
@@ -134,7 +149,7 @@ export class World extends DisplayElement {
    * @param {number} y
    */
   enterDecoy(x, y) {
-    new Decoy()
+    new Decoy({world: this})
       .setPosition(x, y)
       .addChildTo(this.layers.enemy);
   }

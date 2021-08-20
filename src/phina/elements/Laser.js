@@ -1,5 +1,5 @@
 import {GameObject} from "@/phina/elements/GameObject";
-import {RectangleShape} from "phina.js";
+import {NumberEx, RectangleShape, Vector2} from "phina.js";
 
 export class Laser extends GameObject {
   static rectOptions = {
@@ -40,6 +40,18 @@ export class Laser extends GameObject {
      * @type {RectangleShape[]}
      */
     this.afterImages = [];
+
+    /**
+     * 前フレーム位置
+     * @type {Vector2|null}
+     */
+    this.beforePosition = null;
+
+    /**
+     * 前フレーム向き
+     * @type {Number|null}
+     */
+    this.beforeRotation = null;
   }
 
   update() {
@@ -47,17 +59,25 @@ export class Laser extends GameObject {
     if (this.shooter) {
       this.setPosition(this.shooter.x, this.shooter.y);
       this.setRotation(this.shooter.angle);
+
+      if (this.beforePosition) {
+        this.beforePosition.set(this.position.x, this.position.y);
+      } else {
+        this.beforePosition = new Vector2(this.position.x, this.position.y);
+      }
+      this.beforeRotation = this.rotation;
     }
   }
 
   setupAfterImage() {
-    // NumberEx.times.call(5, () => {
-    //   const image = new RectangleShape(Laser.rectOptions)
-    //     .setPosition(this.beforePosition.x, this.beforePosition.y)
-    //     .setRotation(this.beforeRotation)
-    //     .setOrigin(0.5, 1.0)
-    //     .addChildTo(this.parent);
-    // })
+    NumberEx.times.call(5, () => {
+      const image = new RectangleShape(Laser.rectOptions)
+        .setPosition(this.beforePosition.x, this.beforePosition.y)
+        .setRotation(this.beforeRotation)
+        .setOrigin(0.5, 1.0)
+        .addChildTo(this.parent);
+      this.afterImages.push(image);
+    })
   }
 
   destroy() {

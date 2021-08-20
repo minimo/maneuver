@@ -4,7 +4,8 @@ export const SCREEN = {
 }
 
 export const LAYER = {
-    num: 7,
+    num: 8,
+    collision: 7,
     foreGround: 6,
     effectForeground: 5,
     player: 4,

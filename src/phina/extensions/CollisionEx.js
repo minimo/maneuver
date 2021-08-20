@@ -1,4 +1,4 @@
-import {Collision, DisplayElement, Vector2} from "phina.js";
+import {Circle, Collision, DisplayElement, Rect, Vector2} from "phina.js";
 
 //エレメント同士の接触判定
 
@@ -8,7 +8,7 @@ export class CollisionEx {
    * @method testLineLine
    * @static
    * 2つの線分が重なっているかどうかを判定します
-   * 参考：http://www5d.biglobe.ne.jp/~tomoya03/shtml/algorithm/Intersection.htm
+   * 参考：http://www5d.biglobe.ne.jp/~tomoya03/shtml/algorithm/Intersection.html
    *
    * ### Example
    *     p1 = new Vector2(100, 100);
@@ -73,6 +73,55 @@ export class CollisionEx {
   }
 
   /**
+   * 円と矩形の当たり判定
+   * @param {Circle} circle
+   * @param {Rect} rect
+   * @returns {boolean}
+   */
+  static testCircleRect (circle, rect) {
+    // まずは大きな矩形で判定(高速化)
+    const bigRect = new Rect(rect.left - circle.radius, rect.top - circle.radius, rect.width + circle.radius * 2, rect.height + circle.radius * 2);
+    if (bigRect.contains(circle.x, circle.y) === false) {
+      return false;
+    }
+
+    // 2種類の矩形と衝突判定
+    const r = new Rect(rect.left - circle.radius, rect.top, rect.width + circle.radius * 2, rect.height);
+    if (r.contains(circle.x, circle.y)) {
+      return true;
+    }
+    r.set(rect.left, rect.top - circle.radius, rect.width, rect.height + circle.radius * 2);
+    if (r.contains(circle.x, circle.y)) {
+      return true;
+    }
+
+    // 円と矩形の４点の判定
+    const c = new Circle(circle.x, circle.y, circle.radius);
+    // left top
+    if (c.contains(rect.left, rect.top)) {
+      return true;
+    }
+    // right top
+    if (c.contains(rect.right, rect.top)) {
+      return true;
+    }
+    // right bottom
+    if (c.contains(rect.right, rect.bottom)) {
+      return true;
+    }
+    // left bottom
+    if (c.contains(rect.left, rect.bottom)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  static testRectCircle(rect, circle) {
+    return this.testCircleRect(circle, rect);
+  }
+
+  /**
    *
    * @param {DisplayElement} elm1
    * @param {DisplayElement} elm2
@@ -87,11 +136,11 @@ export class CollisionEx {
       if (elm2.boundingType === 'rect') {
         return Collision.testRectRect(elm1, target);
       } else {
-        return Collision.testRectCircle(elm1, target);
+        return CollisionEx.testRectCircle(elm1, target);
       }
     } else {
-      if (elm.boundingType === 'rect') {
-        return Collision.testCiecleRect(elm1, target);
+      if (elm2.boundingType === 'rect') {
+        return CollisionEx.testCircleRect(elm1, target);
       } else {
         return Collision.testCircleCircle(elm1, target);
       }
