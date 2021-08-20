@@ -14762,6 +14762,7 @@ phina.namespace(function() {
       }.bind(this);
 
       loader.load(options.assets);
+      this.gauge.visible = false;
     },
 
     _static: {
