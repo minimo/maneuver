@@ -82,7 +82,7 @@ export class Player extends GameObject {
     player.sprite.setFrameIndex(player.angle);
 
     if (ct.up) {
-      player.accelerator += 0.001;
+      player.accelerator += 0.005;
       if (player.accelerator > 1) player.accelerator = 1;
       const rad = MathEx.degToRad(player.angle)
       player.velocity.x += Math.sin(rad) * player.accelerator;
